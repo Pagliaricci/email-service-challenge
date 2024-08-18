@@ -1,0 +1,12 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: example
+      POSTGRES_DB: email_service_db
+    ports:
+      - "1234:5432"
+  # Otros servicios, como tu aplicación
