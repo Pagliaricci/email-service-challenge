@@ -2,7 +2,8 @@ import express, { Application, Request, Response, NextFunction } from 'express';
 import registerRoute from './routes/register';
 import loginRoute from './routes/login';
 import statsRoute from './routes/stats';
-import { authMiddleware } from './middlewares/auth';  
+import { authMiddleware } from './middlewares/auth';
+import {sendEmailController} from './controllers/emailController';  
 
 import dotenv from 'dotenv';
 dotenv.config();
@@ -15,6 +16,7 @@ app.use('/register', registerRoute);
 app.use('/login', loginRoute);
 
 app.use('/stats', authMiddleware, statsRoute);
+app.use('/email', sendEmailController);
 
 app.get('/protected', authMiddleware, (req: Request, res: Response) => {
   res.send('This is a protected route');
@@ -25,7 +27,6 @@ app.use((req: Request, res: Response) => {
 });
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  console.error(err.stack);
   res.status(500).json({ message: 'Internal Server Error' });
 });
 

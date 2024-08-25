@@ -24,12 +24,11 @@ describe('Statistics', () => {
   });
 
   it('should return statistics for admin users', async () => {
-
     const response = await request(app)
       .get('/stats')
       .set('Authorization', `Bearer ${adminToken}`);
-    console.log('HOLAASDASDDSAS');
-    console.log('Response body:', response.body);
+
+    console.log('Statistics for admin:', response.body);
 
     expect(response.status).toBe(200);
     expect(Array.isArray(response.body)).toBe(true);
@@ -40,10 +39,10 @@ describe('Statistics', () => {
 
   it('should return 403 for non-admin users requesting stats', async () => {
     const response = await request(app)
-      .get('/stats')  
+      .get('/stats')
       .set('Authorization', `Bearer ${userToken}`);
-    console.log('CHAUAUACHHA');
-    console.log('Response body:', response.body);
+
+    console.log('Response for non-admin user:', response.body); 
 
     expect(response.status).toBe(403);
     expect(response.body).toHaveProperty('message', 'Forbidden');
